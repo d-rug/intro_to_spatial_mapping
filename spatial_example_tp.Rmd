@@ -33,6 +33,7 @@ library(tigris) #brings in places data
 library(tidycensus) #brings in census data
 library(sf) #spatial package
 library(tmap) #mapping package
+library(bookdown)
 ```
 
 Step one: Bring in all datasets. In our case, we are going to use three sources of data: 1) City of Davis boundary, 2) census tract data for population and median housing value, and 3) fallenfruit.org fruit tree locations.
