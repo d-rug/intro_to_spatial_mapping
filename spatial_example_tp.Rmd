@@ -16,17 +16,13 @@ The two main packages that deal with vector data in R:
 
 SF stands for "simple feature". It sees any real-word object (or vector) as a feature and a feature can have both a geometry of where the feature is located and attributes associated with it. For example, a county is a feature with a polygon shape and can have attributes like population, number of hospitals, etc. associated with it. Another example could be a UC Davis, which would have a point geometry.
 
-### Mapping
-
-tmap:
-
-leaflet:
-
 # Mapping trees in Davis Example {.unnumbered}
 
 I am curious about the spatial distribution of fruit trees in Davis. In order to examine this, we will need to bring in the geography of the City of Davis, as well as point data from fallingfruit.org
 
-```{r setup}
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(message = FALSE, results = "hide", error = FALSE, warning = FALSE)
+
 library(tidyverse)
 library(rmapshaper) # spatial data wrangling
 library(tigris) #brings in places data
