@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Mapping trees in Davis Example | Intro to Spatial Mapping</title>
+  <meta name="description" content="Mapping trees in Davis Example | Intro to Spatial Mapping" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Mapping trees in Davis Example | Intro to Spatial Mapping" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta name="github-repo" content="d-rug/intro_to_spatial_mapping" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Mapping trees in Davis Example | Intro to Spatial Mapping" />
+  
+  
+  
+
+<meta name="author" content="Tara Pozzi and Reed Kenny" />
+
+
+<meta name="date" content="2023-03-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="spatial-data-workflow.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="https://d-rug.github.io/">
+  <img src="https://github.com/d-rug/d-rug.github.io/raw/main/DRUG_final_cobalt.png" style="height: 100%; width: 100%; object-fit: contain" />
+</a></li>
+<li><a href="./" style="font-size: 18px">Intro to Spatial Mapping</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="intro-to-spatial-data.html"><a href="intro-to-spatial-data.html"><i class="fa fa-check"></i>Intro to Spatial Data</a></li>
+<li class="chapter" data-level="" data-path="spatial-data-workflow.html"><a href="spatial-data-workflow.html"><i class="fa fa-check"></i>Spatial Data Workflow</a></li>
+<li class="chapter" data-level="" data-path="mapping-trees-in-davis-example.html"><a href="mapping-trees-in-davis-example.html"><i class="fa fa-check"></i>Mapping trees in Davis Example</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="mapping-trees-in-davis-example.html"><a href="mapping-trees-in-davis-example.html#bring-in-data"><i class="fa fa-check"></i><b>0.1</b> Bring in data</a></li>
+<li class="chapter" data-level="0.2" data-path="mapping-trees-in-davis-example.html"><a href="mapping-trees-in-davis-example.html#data-wrangling"><i class="fa fa-check"></i><b>0.2</b> Data wrangling</a></li>
+<li class="chapter" data-level="0.3" data-path="mapping-trees-in-davis-example.html"><a href="mapping-trees-in-davis-example.html#coordinate-reference-system"><i class="fa fa-check"></i><b>0.3</b> Coordinate Reference System</a></li>
+<li class="chapter" data-level="0.4" data-path="mapping-trees-in-davis-example.html"><a href="mapping-trees-in-davis-example.html#mapping-the-data"><i class="fa fa-check"></i><b>0.4</b> Mapping the data</a></li>
+</ul></li>
+<li class="divider"></li>
+<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+  <img alt="CC BY-SA 4.0" src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg" style="float: right; padding-right: 10px;" />
+</a>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Intro to Spatial Mapping</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="mapping-trees-in-davis-example" class="section level1 unnumbered hasAnchor">
+<h1>Mapping trees in Davis Example<a href="mapping-trees-in-davis-example.html#mapping-trees-in-davis-example" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>I am curious about the spatial distribution of fruit trees in Davis, and how this distribution pattern relates to population size and median housing value in Davis. In order to examine this, we will need to bring in US Census data for the City of Davis, as well as point data from fallingfruit.org</p>
+<div id="bring-in-data" class="section level2 hasAnchor" number="0.1">
+<h2><span class="header-section-number">0.1</span> Bring in data<a href="mapping-trees-in-davis-example.html#bring-in-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Bring in all datasets of interest. In our case, we are going to use three sources of data: 1) City of Davis boundary, 2) census tract data for population and median housing value, and 3) fallenfruit.org fruit tree locations.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="mapping-trees-in-davis-example.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You will need to sign up for a Census API Key if you are interested in pulling in US Census data </span></span>
+<span id="cb1-2"><a href="mapping-trees-in-davis-example.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Request an API key here: https://api.census.gov/data/key_signup.html</span></span>
+<span id="cb1-3"><a href="mapping-trees-in-davis-example.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#census_api_key(&quot;3f1a61d7b9d2f870de53940d461dda896938261b&quot;, install = TRUE) #now stored in my R environment</span></span>
+<span id="cb1-4"><a href="mapping-trees-in-davis-example.html#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="mapping-trees-in-davis-example.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The tigris packages provides a way to directly download incorporated city footprints</span></span>
+<span id="cb1-6"><a href="mapping-trees-in-davis-example.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Pull in in places data for California</span></span>
+<span id="cb1-7"><a href="mapping-trees-in-davis-example.html#cb1-7" aria-hidden="true" tabindex="-1"></a>pl <span class="ot">&lt;-</span> <span class="fu">places</span>(<span class="at">state =</span> <span class="st">&quot;CA&quot;</span>, <span class="at">year =</span> <span class="dv">2020</span>, <span class="at">cb =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-8"><a href="mapping-trees-in-davis-example.html#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="mapping-trees-in-davis-example.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Now let&#39;s just isolate the boundary for the City of Davis</span></span>
+<span id="cb1-10"><a href="mapping-trees-in-davis-example.html#cb1-10" aria-hidden="true" tabindex="-1"></a>davis <span class="ot">&lt;-</span> pl <span class="sc">%&gt;%</span></span>
+<span id="cb1-11"><a href="mapping-trees-in-davis-example.html#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(NAME <span class="sc">==</span> <span class="st">&quot;Davis&quot;</span>)</span>
+<span id="cb1-12"><a href="mapping-trees-in-davis-example.html#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="mapping-trees-in-davis-example.html#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Take a look at the dataframe</span></span>
+<span id="cb1-14"><a href="mapping-trees-in-davis-example.html#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(davis)</span>
+<span id="cb1-15"><a href="mapping-trees-in-davis-example.html#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="mapping-trees-in-davis-example.html#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Let&#39;s also pull in some census tract data from the City of Davis</span></span>
+<span id="cb1-17"><a href="mapping-trees-in-davis-example.html#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="do">## First, let&#39;s look at what variables are available </span></span>
+<span id="cb1-18"><a href="mapping-trees-in-davis-example.html#cb1-18" aria-hidden="true" tabindex="-1"></a>v20 <span class="ot">&lt;-</span> <span class="fu">load_variables</span>(<span class="dv">2020</span>, <span class="st">&quot;acs5&quot;</span>, <span class="at">cache=</span><span class="cn">TRUE</span>) <span class="co"># load variable options</span></span>
+<span id="cb1-19"><a href="mapping-trees-in-davis-example.html#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="mapping-trees-in-davis-example.html#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Now that we have chosen our variables of interest, let&#39;s pull in that data</span></span>
+<span id="cb1-21"><a href="mapping-trees-in-davis-example.html#cb1-21" aria-hidden="true" tabindex="-1"></a>ca.tracts <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(</span>
+<span id="cb1-22"><a href="mapping-trees-in-davis-example.html#cb1-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">geography =</span> <span class="st">&quot;tract&quot;</span>,</span>
+<span id="cb1-23"><a href="mapping-trees-in-davis-example.html#cb1-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">year =</span> <span class="dv">2020</span>, <span class="co"># final year</span></span>
+<span id="cb1-24"><a href="mapping-trees-in-davis-example.html#cb1-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">variables =</span> <span class="fu">c</span>(<span class="at">totp =</span> <span class="st">&quot;B01003_001&quot;</span>, <span class="co">#median income</span></span>
+<span id="cb1-25"><a href="mapping-trees-in-davis-example.html#cb1-25" aria-hidden="true" tabindex="-1"></a>                    <span class="at">medhouse =</span> <span class="st">&quot;B25077_001&quot;</span>), <span class="co">#Median housing value for owner-occupied housing units</span></span>
+<span id="cb1-26"><a href="mapping-trees-in-davis-example.html#cb1-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">state =</span> <span class="st">&quot;CA&quot;</span>,</span>
+<span id="cb1-27"><a href="mapping-trees-in-davis-example.html#cb1-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">output=</span> <span class="st">&quot;wide&quot;</span>,</span>
+<span id="cb1-28"><a href="mapping-trees-in-davis-example.html#cb1-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">survey =</span> <span class="st">&quot;acs5&quot;</span>, <span class="co">#this loads the data from the last 5 years of acs records</span></span>
+<span id="cb1-29"><a href="mapping-trees-in-davis-example.html#cb1-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">geometry =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-30"><a href="mapping-trees-in-davis-example.html#cb1-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">cb =</span> <span class="cn">FALSE</span></span>
+<span id="cb1-31"><a href="mapping-trees-in-davis-example.html#cb1-31" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb1-32"><a href="mapping-trees-in-davis-example.html#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="mapping-trees-in-davis-example.html#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Now bring in fallingfruit.org</span></span>
+<span id="cb1-34"><a href="mapping-trees-in-davis-example.html#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="do">## I went onto the website and directly downloaded the csv file</span></span>
+<span id="cb1-35"><a href="mapping-trees-in-davis-example.html#cb1-35" aria-hidden="true" tabindex="-1"></a>fruit <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/data.csv&quot;</span>)</span></code></pre></div>
+</div>
+<div id="data-wrangling" class="section level2 hasAnchor" number="0.2">
+<h2><span class="header-section-number">0.2</span> Data wrangling<a href="mapping-trees-in-davis-example.html#data-wrangling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Oftentimes, you may want to subset spatial data relative to other spatial data. Some common spatial data wrangling tasks:</p>
+<p>Intersect: keeps all polygons that intersect with the specified spatial boundary</p>
+<p>Within: keeps all polygons that are wholy within the specified spatial boundary</p>
+<p>Clipping: clips polygons based on specific spatial extents</p>
+<p>Areal interpolation: “allocation of data from one set of zones to a second overlapping set of zones that may or may not perfectly align spatially”</p>
+<p>For this example, I am only interested in the distribuition of fruit trees within Davis. The ms_clip function from rmapshaper is useful for clipping data to the spatial extents of Davis.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="mapping-trees-in-davis-example.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Now I am only interested in Davis census tracts, so I will use the city of davis boundary to clip the tracts</span></span>
+<span id="cb2-2"><a href="mapping-trees-in-davis-example.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">## This function comes from the rmapshaper package</span></span>
+<span id="cb2-3"><a href="mapping-trees-in-davis-example.html#cb2-3" aria-hidden="true" tabindex="-1"></a>davis.tracts <span class="ot">&lt;-</span> <span class="fu">ms_clip</span>(<span class="at">target =</span> ca.tracts, <span class="at">clip =</span> davis, <span class="at">remove_slivers =</span> <span class="cn">TRUE</span>) </span></code></pre></div>
+</div>
+<div id="coordinate-reference-system" class="section level2 hasAnchor" number="0.3">
+<h2><span class="header-section-number">0.3</span> Coordinate Reference System<a href="mapping-trees-in-davis-example.html#coordinate-reference-system" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now that we have all of our data, we need to make sure that each dataset has the same Coordinate Reference System (CRS). The CRS has two parts:</p>
+<ol style="list-style-type: decimal">
+<li>Geographic Coordinate System (GCS): three dimensional spherical surface. The GCS is made up of the ellipse (how the earth’s roundness is calculated) and the datum (coordinate system).</li>
+<li>Projected Coordinate System (PCS), or “projection”: Flattens the GCS into a two-dimensional</li>
+</ol>
+<p>Both GCS and PCS need to be specified when working with spatial data! In order to do this, you will first need to find out what CRS your spatial dataset was created in initially.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="mapping-trees-in-davis-example.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check CRS of all three datasets</span></span>
+<span id="cb3-2"><a href="mapping-trees-in-davis-example.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(davis)</span>
+<span id="cb3-3"><a href="mapping-trees-in-davis-example.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(davis) <span class="co">#NAD83</span></span>
+<span id="cb3-4"><a href="mapping-trees-in-davis-example.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(davis)<span class="sc">$</span>proj4string <span class="co">#&quot;+proj=longlat +datum=NAD83 +no_defs&quot; </span></span>
+<span id="cb3-5"><a href="mapping-trees-in-davis-example.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(davis)<span class="sc">$</span>units <span class="co">#NULL</span></span>
+<span id="cb3-6"><a href="mapping-trees-in-davis-example.html#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="mapping-trees-in-davis-example.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(davis.tracts) <span class="co">#NAD83</span></span>
+<span id="cb3-8"><a href="mapping-trees-in-davis-example.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(davis.tracts)<span class="sc">$</span>proj4string <span class="co">#&quot;+proj=longlat +datum=NAD83 +no_defs&quot; </span></span>
+<span id="cb3-9"><a href="mapping-trees-in-davis-example.html#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(davis.tracts)<span class="sc">$</span>units <span class="co">#NULL</span></span>
+<span id="cb3-10"><a href="mapping-trees-in-davis-example.html#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="mapping-trees-in-davis-example.html#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(fruit) <span class="co">#NA</span></span>
+<span id="cb3-12"><a href="mapping-trees-in-davis-example.html#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(fruit)<span class="sc">$</span>proj4string <span class="co">#NA</span></span>
+<span id="cb3-13"><a href="mapping-trees-in-davis-example.html#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="mapping-trees-in-davis-example.html#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># So we can see that both the davis and ca.tracts dataframes are in NAD 83, so let&#39;s reproject the fruit dataframe to also be in this projection</span></span>
+<span id="cb3-15"><a href="mapping-trees-in-davis-example.html#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="mapping-trees-in-davis-example.html#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Reprojection</span></span>
+<span id="cb3-17"><a href="mapping-trees-in-davis-example.html#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="do">## First, establish the CRS for the fruit dataset based on how it was created intially</span></span>
+<span id="cb3-18"><a href="mapping-trees-in-davis-example.html#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Since fruit is point data, the projected coordinate system is already set because latitude and longitude are the X-Y coordinates but we need to tell R this</span></span>
+<span id="cb3-19"><a href="mapping-trees-in-davis-example.html#cb3-19" aria-hidden="true" tabindex="-1"></a>fruit.sf <span class="ot">&lt;-</span> fruit <span class="sc">%&gt;%</span></span>
+<span id="cb3-20"><a href="mapping-trees-in-davis-example.html#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;lng&quot;</span>, <span class="st">&quot;lat&quot;</span>), </span>
+<span id="cb3-21"><a href="mapping-trees-in-davis-example.html#cb3-21" aria-hidden="true" tabindex="-1"></a>           <span class="at">crs =</span> <span class="st">&quot;+proj=longlat +datum=WGS84 +ellps=WGS84&quot;</span>)</span>
+<span id="cb3-22"><a href="mapping-trees-in-davis-example.html#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(fruit.sf)<span class="co"># +proj=longlat +datum=WGS84 +ellps=WGS84 </span></span>
+<span id="cb3-23"><a href="mapping-trees-in-davis-example.html#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="mapping-trees-in-davis-example.html#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Now let&#39;s reproject so it is on the same coordinate system as the other dataframes</span></span>
+<span id="cb3-25"><a href="mapping-trees-in-davis-example.html#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="do">### By transform to proj = utm, now the CRS can handle distance measures</span></span>
+<span id="cb3-26"><a href="mapping-trees-in-davis-example.html#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="do">### UTM: Universal Transverse Mercator works in meters</span></span>
+<span id="cb3-27"><a href="mapping-trees-in-davis-example.html#cb3-27" aria-hidden="true" tabindex="-1"></a>fruit.utm <span class="ot">&lt;-</span> fruit.sf <span class="sc">%&gt;%</span></span>
+<span id="cb3-28"><a href="mapping-trees-in-davis-example.html#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="st">&quot;+proj=utm +zone=10 +datum=NAD83 +ellps=GRS80&quot;</span>)</span>
+<span id="cb3-29"><a href="mapping-trees-in-davis-example.html#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="mapping-trees-in-davis-example.html#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="do">## Reproject davis and ca.tracts to also be in UTM</span></span>
+<span id="cb3-31"><a href="mapping-trees-in-davis-example.html#cb3-31" aria-hidden="true" tabindex="-1"></a>davis.utm <span class="ot">&lt;-</span> davis <span class="sc">%&gt;%</span></span>
+<span id="cb3-32"><a href="mapping-trees-in-davis-example.html#cb3-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="st">&quot;+proj=utm +zone=10 +datum=NAD83 +ellps=GRS80&quot;</span>)</span>
+<span id="cb3-33"><a href="mapping-trees-in-davis-example.html#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="mapping-trees-in-davis-example.html#cb3-34" aria-hidden="true" tabindex="-1"></a>davis.tracts.utm <span class="ot">&lt;-</span> davis.tracts <span class="sc">%&gt;%</span></span>
+<span id="cb3-35"><a href="mapping-trees-in-davis-example.html#cb3-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="st">&quot;+proj=utm +zone=10 +datum=NAD83 +ellps=GRS80&quot;</span>)</span>
+<span id="cb3-36"><a href="mapping-trees-in-davis-example.html#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-37"><a href="mapping-trees-in-davis-example.html#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Great, nows lets check to see if all dataframes are on the same CRS</span></span>
+<span id="cb3-38"><a href="mapping-trees-in-davis-example.html#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(fruit.utm) <span class="sc">==</span> <span class="fu">st_crs</span>(davis.utm) <span class="co">#TRUE</span></span>
+<span id="cb3-39"><a href="mapping-trees-in-davis-example.html#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="mapping-trees-in-davis-example.html#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(davis.utm) <span class="sc">==</span> <span class="fu">st_crs</span>(davis.tracts.utm) <span class="co">#TRUE</span></span></code></pre></div>
+</div>
+<div id="mapping-the-data" class="section level2 hasAnchor" number="0.4">
+<h2><span class="header-section-number">0.4</span> Mapping the data<a href="mapping-trees-in-davis-example.html#mapping-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Finally, we are at the point where we can map the data! Let’s first see what mapping it with tmap looks like.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="mapping-trees-in-davis-example.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Map the point data over the census tract data</span></span>
+<span id="cb4-2"><a href="mapping-trees-in-davis-example.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">## tmap </span></span>
+<span id="cb4-3"><a href="mapping-trees-in-davis-example.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(davis.tracts.utm) <span class="sc">+</span></span>
+<span id="cb4-4"><a href="mapping-trees-in-davis-example.html#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">col =</span> <span class="st">&quot;medhouseE&quot;</span>, <span class="at">style =</span> <span class="st">&quot;quantile&quot;</span>, <span class="at">palette =</span> <span class="st">&quot;Blues&quot;</span>,</span>
+<span id="cb4-5"><a href="mapping-trees-in-davis-example.html#cb4-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">title =</span> <span class="st">&quot;Median Housing Value ($)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="mapping-trees-in-davis-example.html#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(fruit.utm) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="mapping-trees-in-davis-example.html#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">&quot;green&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="mapping-trees-in-davis-example.html#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">#tm_text(&quot;types&quot;) +</span></span>
+<span id="cb4-9"><a href="mapping-trees-in-davis-example.html#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_scale_bar</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">text.size =</span> <span class="dv">1</span>, <span class="at">position =</span> <span class="fu">c</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;bottom&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb4-10"><a href="mapping-trees-in-davis-example.html#cb4-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tm_compass</span>(<span class="at">type =</span> <span class="st">&quot;4star&quot;</span>, <span class="at">position =</span> <span class="fu">c</span>(<span class="st">&quot;right&quot;</span>, <span class="st">&quot;bottom&quot;</span>))  <span class="sc">+</span></span>
+<span id="cb4-11"><a href="mapping-trees-in-davis-example.html#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">main.title =</span> <span class="st">&quot;Fruit Trees in Davis&quot;</span>, </span>
+<span id="cb4-12"><a href="mapping-trees-in-davis-example.html#cb4-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">main.title.size =</span> <span class="fl">1.25</span>, <span class="at">main.title.position=</span><span class="st">&quot;center&quot;</span>,</span>
+<span id="cb4-13"><a href="mapping-trees-in-davis-example.html#cb4-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.outside =</span> <span class="cn">TRUE</span>, <span class="at">legend.outside.position =</span> <span class="st">&quot;right&quot;</span>,</span>
+<span id="cb4-14"><a href="mapping-trees-in-davis-example.html#cb4-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">frame =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="01_fallingfruit_example_files/figure-html/tmap-1.png" width="672" /></p>
+<p>Now let’s try mapping with leaflet.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="mapping-trees-in-davis-example.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## need to reproject davis.tracts data to be +proj=longlat</span></span>
+<span id="cb5-2"><a href="mapping-trees-in-davis-example.html#cb5-2" aria-hidden="true" tabindex="-1"></a>davis.tracts.sf <span class="ot">&lt;-</span> davis.tracts <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="mapping-trees-in-davis-example.html#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="st">&quot;+proj=longlat +datum=WGS84 +ellps=WGS84&quot;</span>)</span>
+<span id="cb5-4"><a href="mapping-trees-in-davis-example.html#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="mapping-trees-in-davis-example.html#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">leaflet</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb5-6"><a href="mapping-trees-in-davis-example.html#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb5-7"><a href="mapping-trees-in-davis-example.html#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addMarkers</span>(<span class="at">data =</span> fruit.sf, <span class="at">popup =</span> <span class="sc">~</span><span class="fu">as.character</span>(types), <span class="at">label =</span> <span class="sc">~</span><span class="fu">as.character</span>(types)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-8"><a href="mapping-trees-in-davis-example.html#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addPolygons</span>(<span class="at">data =</span> davis.tracts.sf, </span>
+<span id="cb5-9"><a href="mapping-trees-in-davis-example.html#cb5-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="sc">~</span><span class="fu">colorQuantile</span>(<span class="st">&quot;Blues&quot;</span>, totpE, <span class="at">n =</span> <span class="dv">5</span>)(totpE),</span>
+<span id="cb5-10"><a href="mapping-trees-in-davis-example.html#cb5-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">weight =</span> <span class="dv">1</span>,</span>
+<span id="cb5-11"><a href="mapping-trees-in-davis-example.html#cb5-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">smoothFactor =</span> <span class="fl">0.5</span>,</span>
+<span id="cb5-12"><a href="mapping-trees-in-davis-example.html#cb5-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">opacity =</span> <span class="fl">1.0</span>,</span>
+<span id="cb5-13"><a href="mapping-trees-in-davis-example.html#cb5-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">fillOpacity =</span> <span class="fl">0.5</span>,</span>
+<span id="cb5-14"><a href="mapping-trees-in-davis-example.html#cb5-14" aria-hidden="true" tabindex="-1"></a>              <span class="at">highlightOptions =</span> <span class="fu">highlightOptions</span>(<span class="at">color =</span> <span class="st">&quot;white&quot;</span>,</span>
+<span id="cb5-15"><a href="mapping-trees-in-davis-example.html#cb5-15" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">weight =</span> <span class="dv">2</span>,</span>
+<span id="cb5-16"><a href="mapping-trees-in-davis-example.html#cb5-16" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">bringToFront =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="spatial-data-workflow.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/d-rug/intro_to_spatial_mapping/edit/master/01_fallingfruit_example.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/d-rug/intro_to_spatial_mapping/blob/master/01_fallingfruit_example.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

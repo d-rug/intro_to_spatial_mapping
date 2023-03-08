@@ -4,7 +4,7 @@ author: Tara Pozzi and Reed Kenny
 date: "`r Sys.Date()`"
 
 github-repo: d-rug/intro_to_spatial_mapping
-url:"https://d-rug.github.io/intro_to_spatial_mapping/"
+url: "https://d-rug.github.io/intro_to_spatial_mapping/"
 
 site: "bookdown::bookdown_site"
 knit: "bookdown::render_book"
