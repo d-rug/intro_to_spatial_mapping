@@ -56,18 +56,17 @@ repo:
 7. `git add` all changed files, then `git commit` and `git push`.
 
 
-# Workshop: YOUR WORKSHOP TITLE
+# Workshop: Intro to Spatial Mapping
 
 _[UC Davis DataLab](https://datalab.ucdavis.edu/)_  
-_QUARTER YEAR_  
-_Instructor: YOUR NAME <<YOUR_EMAIL@ucdavis.edu>>_  
-_Maintainer: MAINTAINER'S NAME <<MAINTAINER_EMAIL@ucdavis.edu>>_
+_Winter 2023_  
+_Instructor: Tara Pozzi <<tbpozzi@ucdavis.edu>> & Reed Kenny <<rkenny@ucdavis.edu>>_  
+_Maintainer: Tara Pozzi <<tbpozzi@ucdavis.edu>>_
 
-* [Reader](https://ucdavisdatalab.github.io/YOUR_REPOSITORY/)
+* [Reader](https://ucdavisdatalab.github.io/intro_to_spatial_mapping/)
 * [Event Page](https://datalab.ucdavis.edu/eventscalendar/YOUR_EVENT/)
 
-YOUR DESCRIPTION, LEARNING GOALS, PREREQUISITES, ETC
-
+In this workshop, we will cover how to bring in different sources of spatial data, as well as how to do spatial data wrangling so you can make a map. We will but using R packages: tidycensus, tmap, and leaflet. 
 
 ## Contributing
 

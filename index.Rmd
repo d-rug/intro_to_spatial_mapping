@@ -1,10 +1,10 @@
 ---
-title: YOUR WORKSHOP TITLE
-author: [YOUR NAME]
+title: INTRO TO SPATIAL MAPPING
+author: Tara Pozzi and Reed Kenny
 date: "`r Sys.Date()`"
 
 github-repo: d-rug/YOUR_REPO
-url: "https://d-rug.github.io/YOUR_REPO/"
+url: "https://d-rug.github.io/INTRO_TO_SPATIAL_MAPPING/"
 
 site: "bookdown::bookdown_site"
 knit: "bookdown::render_book"
@@ -29,4 +29,4 @@ output:
 
 # Overview {-}
 
-YOUR DESCRIPTION, LEARNING GOALS, PREREQUISITES, ETC
+In this workshop, we will cover how to bring in different sources of spatial data, as well as how to do spatial data wrangling so you can make a map. We will but using R packages: tidycensus, tmap, and leaflet. 

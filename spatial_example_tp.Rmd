@@ -1,0 +1,148 @@
+## R packages for spatial data
+
+### Data Wrangling
+
+Vector data is essentially object data meaning any real world thing like a tree, building, forest, etc. can be considered an object and therefore vector.
+
+The two main packages that deal with vector data in R:
+
+-   **sp:** the original spatial package in R (first released in 2005) that has a complex data structure
+
+-   **sf:** much newer, so not as well established as **sp**, but it is easier to use than sp and is tidy friendly
+
+SF stands for "simple feature". It sees any real-word object (or vector) as a feature and a feature can have both a geometry of where the feature is located and attributes associated with it. For example, a county is a feature with a polygon shape and can have attributes like population, number of hospitals, etc. associated with it. Another example could be a UC Davis, which would have a point geometry.
+
+### Mapping
+
+tmap:
+
+leaflet:
+
+# Mapping trees in Davis Example {.unnumbered}
+
+I am curious about the spatial distribution of fruit trees in Davis. In order to examine this, we will need to bring in the geography of the City of Davis, as well as point data from fallingfruit.org
+
+```{r setup}
+library(tidyverse)
+library(rmapshaper) # spatial data wrangling
+library(tigris) #brings in places data
+library(tidycensus) #brings in census data
+library(sf) #spatial package
+```
+
+Step one: Bring in all datasets. In our case, we are going to use three sources of data: 1) City of Davis boundary, 2) census tract data for population and median housing value, and 3) fallenfruit.org fruit tree locations.
+
+```{r census_tracts}
+# You will need to sign up for a Census API Key if you are intersted in pulling in US Census data 
+## Request an API key here: https://api.census.gov/data/key_signup.html
+#census_api_key("3f1a61d7b9d2f870de53940d461dda896938261b", install = TRUE) #now stored in my R environment
+
+# Pull in in places data
+pl <- places(state = "CA", year = 2020, cb = FALSE)
+
+glimpse(pl)
+
+# Now let's just isolate the boundary for the City of Davis
+
+davis <- pl %>%
+  filter(NAME == "Davis")
+
+glimpse(davis)
+
+# Let's also pull in some census tract data from the City of Davis
+## first, let's look at what variables are available 
+v20 <- load_variables(2020, "acs5", cache=TRUE) # load variable options
+
+## Now that we have chosen our variables of interest, let's pull in that data
+ca.tracts <- get_acs(
+      geography = "tract",
+      year = 2020, # final year
+      variables = c(totp = "B01003_001", #median income
+                    medhouse = "B25077_001"), #Median housing value for owner-occupied housing units
+      state = "CA",
+      output= "wide",
+      survey = "acs5", #this loads the data from the last 5 years of acs records
+      geometry = TRUE,
+      cb = FALSE
+      )
+
+### Now I am only interested in Davis census tracts, so I will use the city of davis boundary to clip the tracts
+davis.tracts <- ms_clip(target = ca.tracts, clip = davis, remove_slivers = TRUE)
+
+## Now bring in fallingfruit.org
+### I went onto the website and directly downloaded the csv file
+fruit <- read.csv("data/data.csv")
+
+
+```
+
+Now that we have all of our data, we need to make sure that each dataset has the same Coordinate Reference System (CRS). The CRS has two parts:
+
+1.  Geographic Coordinate System (GCS): three dimensional spherical surface. The GCS is made up of the ellipse (how the earth's roundness is calculated) and the datum (coordinate system).
+2.  Projected Coordinate System (PCS), or "projection": Flattens the GCS into a two-dimensional
+
+Both GCS and PCS need to be specified when working with spatial data! In order to do this, you will first need to find out what CRS your spatial dataset was created in initially.
+
+```{r crs}
+# Check CRS of all three datasets
+class(davis)
+st_crs(davis) #NAD83
+st_crs(davis)$proj4string #"+proj=longlat +datum=NAD83 +no_defs" 
+st_crs(davis)$units #NULL
+
+st_crs(davis.tracts) #NAD83
+st_crs(davis.tracts)$proj4string #"+proj=longlat +datum=NAD83 +no_defs" 
+st_crs(davis.tracts)$units #NULL
+
+st_crs(fruit) #NA
+st_crs(fruit)$proj4string #NA
+
+# So we can see that both the davis and ca.tracts dataframes are in NAD 83, so let's reproject the fruit dataframe to also be in this projection
+
+# Reprojection
+## First, establish the CRS for the fruit dataset based on how it was created intially
+## Since fruit is point data, the projected coordinate system is already set because latitude and longitude are the X-Y coordinates but we need to tell R this
+fruit.sf <- fruit %>%
+  st_as_sf(coords = c("lng", "lat"), 
+           crs = "+proj=longlat +datum=WGS84 +ellps=WGS84")
+st_crs(fruit.sf)# +proj=longlat +datum=WGS84 +ellps=WGS84 
+
+## Now let's reproject so it is on the same coordinate system as the other dataframes
+### By transform to proj = utm, now the CRS can handle distance measures
+### UTM: Universal Transverse Mercator works in meters
+fruit.utm <- fruit.sf %>%
+  st_transform(crs = "+proj=utm +zone=10 +datum=NAD83 +ellps=GRS80")
+
+## Reproject davis and ca.tracts to also be in UTM
+davis.utm <- davis %>%
+  st_transform(crs = "+proj=utm +zone=10 +datum=NAD83 +ellps=GRS80")
+
+davis.tracts.utm <- davis.tracts %>%
+  st_transform(crs = "+proj=utm +zone=10 +datum=NAD83 +ellps=GRS80")
+
+# Great, nows lets check to see if all dataframes are on the same CRS
+st_crs(fruit.utm) == st_crs(davis.utm) #TRUE
+
+st_crs(davis.utm) == st_crs(davis.tracts.utm) #TRUE
+
+
+```
+
+Finally, we are the point where we can map the data! For this example, I outline how to use tmap to do this.
+
+```{r map}
+# Map the point data over the census tract data
+tmap_mode("view")
+tm_shape(davis.tracts.utm) +
+  tm_polygons(col = "medhouseE", style = "quantile", palette = "Blues",
+              title = "Median Housing Value ($)") +
+  tm_shape(fruit) +
+  tm_dots(col = "green") +
+  #tm_text("types") +
+    tm_scale_bar(breaks = c(0, 1, 2), text.size = 1, position = c("left", "bottom")) +
+      tm_compass(type = "4star", position = c("right", "bottom"))  +
+  tm_layout(main.title = "Fruit Trees in Davis", 
+            main.title.size = 1.25, main.title.position="center",
+            legend.outside = TRUE, legend.outside.position = "right",
+            frame = FALSE)
+```
