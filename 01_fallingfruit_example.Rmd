@@ -1,10 +1,12 @@
-## R packages for spatial data
+---
+---
+# Intro to Spatial Data
 
-### Data Wrangling
+This workshop borrows largely from Noli Brazil's class [CRD 230: Spatial Methods in Community Research](https://crd230.github.io)
 
-Vector data is essentially object data meaning any real world thing like a tree, building, forest, etc. can be considered an object and therefore vector.
+This workshop will cover some useful packages to wrangle and visualize spatial data. Specifically, we will learn how to pull in data from a few different sources, set a Coordinate Reference System, and create a map. 
 
-The two main packages that deal with vector data in R:
+The example here mostly works with vector data, which is characterized by real world objects like a tree, building, forest, etc. The two main packages that deal with vector data in R:
 
 -   **sp:** the original spatial package in R (first released in 2005) that has a complex data structure
 
@@ -12,9 +14,19 @@ The two main packages that deal with vector data in R:
 
 SF stands for "simple feature". It sees any real-word object (or vector) as a feature and a feature can have both a geometry of where the feature is located and attributes associated with it. For example, a county is a feature with a polygon shape and can have attributes like population, number of hospitals, etc. associated with it. Another example could be a UC Davis, which would have a point geometry.
 
-# Mapping trees in Davis Example {.unnumbered}
+Although, this workshop mostly covers vector data, it will also touch on another type of spatial data called raster data. Raster data is made up of pixels/cells that form a grid filled with information, that is typically continuous in nature (e.g., elevation temperature, land use). 
+# Spatial Data Workflow
 
-I am curious about the spatial distribution of fruit trees in Davis. In order to examine this, we will need to bring in the geography of the City of Davis, as well as point data from fallingfruit.org
+Here is a sample spatial data workflow: 
+1. Bring in spatial data of interest into R
+2. Wrangle data into desired format (e.g., intersect/within/clip, merge multiple spatial dataframes, areal interpolation, etc.)
+3. Set Coordinate Reference System (and potentially reproject or specify measurement units)
+4. Map data
+
+# Mapping trees in Davis Example 
+I am curious about the spatial distribution of fruit trees in Davis, and how this distribution pattern relates to population size and median housing value in Davis. In order to examine this, we will need to bring in US Census data for the City of Davis, as well as point data from fallingfruit.org
+
+## Bring in data
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(message = FALSE, results = "hide", error = FALSE, warning = FALSE)
@@ -26,29 +38,29 @@ library(tidycensus) #brings in census data
 library(sf) #spatial package
 library(tmap) #mapping package
 library(bookdown)
+library(leaflet)#mapping package
 ```
 
-Step one: Bring in all datasets. In our case, we are going to use three sources of data: 1) City of Davis boundary, 2) census tract data for population and median housing value, and 3) fallenfruit.org fruit tree locations.
+Bring in all datasets of interest. In our case, we are going to use three sources of data: 1) City of Davis boundary, 2) census tract data for population and median housing value, and 3) fallenfruit.org fruit tree locations.
 
 ```{r census_tracts}
-# You will need to sign up for a Census API Key if you are intersted in pulling in US Census data 
+# You will need to sign up for a Census API Key if you are interested in pulling in US Census data 
 ## Request an API key here: https://api.census.gov/data/key_signup.html
 #census_api_key("3f1a61d7b9d2f870de53940d461dda896938261b", install = TRUE) #now stored in my R environment
 
-# Pull in in places data
+# The tigris packages provides a way to directly download incorporated city footprints
+## Pull in in places data for California
 pl <- places(state = "CA", year = 2020, cb = FALSE)
 
-glimpse(pl)
-
-# Now let's just isolate the boundary for the City of Davis
-
+## Now let's just isolate the boundary for the City of Davis
 davis <- pl %>%
   filter(NAME == "Davis")
 
+## Take a look at the dataframe
 glimpse(davis)
 
 # Let's also pull in some census tract data from the City of Davis
-## first, let's look at what variables are available 
+## First, let's look at what variables are available 
 v20 <- load_variables(2020, "acs5", cache=TRUE) # load variable options
 
 ## Now that we have chosen our variables of interest, let's pull in that data
@@ -64,15 +76,30 @@ ca.tracts <- get_acs(
       cb = FALSE
       )
 
-### Now I am only interested in Davis census tracts, so I will use the city of davis boundary to clip the tracts
-davis.tracts <- ms_clip(target = ca.tracts, clip = davis, remove_slivers = TRUE)
-
-## Now bring in fallingfruit.org
-### I went onto the website and directly downloaded the csv file
+# Now bring in fallingfruit.org
+## I went onto the website and directly downloaded the csv file
 fruit <- read.csv("data/data.csv")
-
-
 ```
+
+## Data wrangling 
+Oftentimes, you may want to subset spatial data relative to other spatial data. Some common spatial data wrangling tasks: 
+
+Intersect: keeps all polygons that intersect with the specified spatial boundary
+
+Within: keeps all polygons that are wholy within the specified spatial boundary
+
+Clipping: clips polygons based on specific spatial extents
+
+Areal interpolation: "allocation of data from one set of zones to a second overlapping set of zones that may or may not perfectly align spatially" 
+
+For this example, I am only interested in the distribuition of fruit trees within Davis. The ms_clip function from rmapshaper is useful for clipping data to the spatial extents of Davis.
+
+```{r clip}
+## Now I am only interested in Davis census tracts, so I will use the city of davis boundary to clip the tracts
+## This function comes from the rmapshaper package
+davis.tracts <- ms_clip(target = ca.tracts, clip = davis, remove_slivers = TRUE) 
+```
+## Coordinate Reference System
 
 Now that we have all of our data, we need to make sure that each dataset has the same Coordinate Reference System (CRS). The CRS has two parts:
 
@@ -126,10 +153,12 @@ st_crs(davis.utm) == st_crs(davis.tracts.utm) #TRUE
 
 ```
 
-Finally, we are the point where we can map the data! For this example, I outline how to use tmap to do this.
+## Mapping the data
+Finally, we are at the point where we can map the data! Let's first see what mapping it with tmap looks like.
 
-```{r map}
+```{r tmap}
 # Map the point data over the census tract data
+## tmap 
 tm_shape(davis.tracts.utm) +
   tm_polygons(col = "medhouseE", style = "quantile", palette = "Blues",
               title = "Median Housing Value ($)") +
@@ -142,4 +171,26 @@ tm_shape(davis.tracts.utm) +
             main.title.size = 1.25, main.title.position="center",
             legend.outside = TRUE, legend.outside.position = "right",
             frame = FALSE)
+
+```
+
+Now let's try mapping with leaflet. 
+
+```{r leaflet}
+## need to reproject davis.tracts data to be +proj=longlat
+davis.tracts.sf <- davis.tracts %>%
+  st_transform(crs = "+proj=longlat +datum=WGS84 +ellps=WGS84")
+
+leaflet() %>%
+  addTiles() %>%
+  addMarkers(data = fruit.sf, popup = ~as.character(types), label = ~as.character(types)) %>%
+  addPolygons(data = davis.tracts.sf, 
+              color = ~colorQuantile("Blues", totpE, n = 5)(totpE),
+              weight = 1,
+              smoothFactor = 0.5,
+              opacity = 1.0,
+              fillOpacity = 0.5,
+              highlightOptions = highlightOptions(color = "white",
+                                                  weight = 2,
+                                                  bringToFront = TRUE))
 ```
