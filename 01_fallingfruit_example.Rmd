@@ -1,6 +1,7 @@
 ---
+
 ---
-# Intro to Spatial Data
+# Intro to Spatial Data {-}
 
 This workshop borrows largely from Noli Brazil's class [CRD 230: Spatial Methods in Community Research](https://crd230.github.io)
 
@@ -15,7 +16,8 @@ The example here mostly works with vector data, which is characterized by real w
 SF stands for "simple feature". It sees any real-word object (or vector) as a feature and a feature can have both a geometry of where the feature is located and attributes associated with it. For example, a county is a feature with a polygon shape and can have attributes like population, number of hospitals, etc. associated with it. Another example could be a UC Davis, which would have a point geometry.
 
 Although, this workshop mostly covers vector data, it will also touch on another type of spatial data called raster data. Raster data is made up of pixels/cells that form a grid filled with information, that is typically continuous in nature (e.g., elevation temperature, land use). 
-# Spatial Data Workflow
+
+# Spatial Data Workflow {-}
 
 Here is a sample spatial data workflow: 
 1. Bring in spatial data of interest into R
@@ -23,7 +25,7 @@ Here is a sample spatial data workflow:
 3. Set Coordinate Reference System (and potentially reproject or specify measurement units)
 4. Map data
 
-# Mapping trees in Davis Example 
+# Mapping trees in Davis Example  {-}
 I am curious about the spatial distribution of fruit trees in Davis, and how this distribution pattern relates to population size and median housing value in Davis. In order to examine this, we will need to bring in US Census data for the City of Davis, as well as point data from fallingfruit.org
 
 ## Bring in data
