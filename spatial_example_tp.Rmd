@@ -1,3 +1,7 @@
+---
+---
+---
+
 ## R packages for spatial data
 
 ### Data Wrangling
@@ -28,6 +32,7 @@ library(rmapshaper) # spatial data wrangling
 library(tigris) #brings in places data
 library(tidycensus) #brings in census data
 library(sf) #spatial package
+library(tmap) #mapping package
 ```
 
 Step one: Bring in all datasets. In our case, we are going to use three sources of data: 1) City of Davis boundary, 2) census tract data for population and median housing value, and 3) fallenfruit.org fruit tree locations.
@@ -132,11 +137,10 @@ Finally, we are the point where we can map the data! For this example, I outline
 
 ```{r map}
 # Map the point data over the census tract data
-tmap_mode("view")
 tm_shape(davis.tracts.utm) +
   tm_polygons(col = "medhouseE", style = "quantile", palette = "Blues",
               title = "Median Housing Value ($)") +
-  tm_shape(fruit) +
+  tm_shape(fruit.utm) +
   tm_dots(col = "green") +
   #tm_text("types") +
     tm_scale_bar(breaks = c(0, 1, 2), text.size = 1, position = c("left", "bottom")) +
