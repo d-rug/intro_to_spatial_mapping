@@ -1,10 +1,10 @@
 ---
-title: INTRO TO SPATIAL MAPPING
+title: Intro to Spatial Mapping
 author: Tara Pozzi and Reed Kenny
 date: "`r Sys.Date()`"
 
-github-repo: d-rug/YOUR_REPO
-url: "https://d-rug.github.io/INTRO_TO_SPATIAL_MAPPING/"
+github-repo: d-rug/intro_to_spatial_mapping
+url: "https://d-rug.github.io/intro_to_spatial_mapping/"
 
 site: "bookdown::bookdown_site"
 knit: "bookdown::render_book"
@@ -16,15 +16,15 @@ output:
           <li><a href="https://d-rug.github.io/">
             <img src="https://github.com/d-rug/d-rug.github.io/raw/main/DRUG_final_cobalt.png" style="height: 100%; width: 100%; object-fit: contain" />
           </a></li>
-          <li><a href="./" style="font-size: 18px">YOUR WORKSHOP TITLE</a></li>
+          <li><a href="./" style="font-size: 18px">Intro to Spatial Mapping</a></li>
         after: |
           <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
             <img alt="CC BY-SA 4.0" src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg" style="float: right; padding-right: 10px;" />
           </a>
         collapse: section
       sharing: no
-      view: https://github.com/d-rug/YOUR_REPO/blob/master/%s
-      edit: https://github.com/d-rug/YOUR_REPO/edit/master/%s
+      view: https://github.com/d-rug/intro_to_spatial_mapping/blob/master/%s
+      edit: https://github.com/d-rug/intro_to_spatial_mapping/edit/master/%s
 ---
 
 # Overview {-}
