@@ -29,8 +29,8 @@ Here is a sample spatial data workflow:
 
 4. Map data
 
-# Mapping trees in Davis Example  {-}
-I am curious about the spatial distribution of fruit trees in Davis, and how this distribution pattern relates to population size and median housing value in Davis. In order to examine this, we will need to bring in US Census data for the City of Davis, as well as point data from fallingfruit.org
+# Mapping fruit trees in Davis Example  {-}
+Let's look at the spatial distribution of fruit trees in Davis, and how this distribution pattern relates to population size and median housing value in Davis. In order to examine this, we will need to bring in US Census data for the City of Davis, as well as point data from fallingfruit.org
 
 ## Bring in data
 
