@@ -196,7 +196,7 @@ leaflet() %>%
                                                   bringToFront = TRUE))
 ```
 
-## Fruit Tree Richness 
+## Fruit Tree Richness
 
 What if we wanted to know which areas in Davis have many different species of fruit trees in one place? This is the kind of question that is easier to answer using raster type data. We want to ask, per unit area, how many different types of trees are there. This is easy to represent on a grid. 
 
