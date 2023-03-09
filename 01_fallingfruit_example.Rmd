@@ -38,14 +38,12 @@ I am curious about the spatial distribution of fruit trees in Davis, and how thi
 knitr::opts_chunk$set(message = FALSE, results = "hide", error = FALSE, warning = FALSE)
 
 library(tidyverse)
-library(rmapshaper) # spatial data wrangling
+library(sf) #spatial package
 library(tigris) #brings in places data
 library(tidycensus) #brings in census data
-library(sf) #spatial package
+library(rmapshaper) # spatial data wrangling
 library(tmap) #mapping package
-library(bookdown)
 library(leaflet)#mapping package
-library(ggnewscale)
 ```
 
 Bring in all datasets of interest. In our case, we are going to use three sources of data: 1) City of Davis boundary, 2) census tract data for population and median housing value, and 3) fallenfruit.org fruit tree locations.
@@ -116,9 +114,9 @@ str(davis.tracts)
 Now that we have all of our data, we need to make sure that each dataset has the same Coordinate Reference System (CRS). The CRS has two parts:
 
 1.  Geographic Coordinate System (GCS): three dimensional spherical surface. The GCS is made up of the ellipse (how the earth's roundness is calculated) and the datum (coordinate system).
-2.  Projected Coordinate System (PCS), or "projection": Flattens the GCS into a two-dimensional
+2.  Projected Coordinate System (PCS), or "projection": Flattens the GCS into a two-dimensional surface
 
-Both GCS and PCS need to be specified when working with spatial data! In order to do this, you will first need to find out what CRS your spatial dataset was created in initially.
+Both GCS and PCS need to be specified when working with spatial data! In order to do this, you will first need to find out what CRS your spatial dataframe was created in initially.
 
 ```{r crs}
 # Check CRS dataframes you want to overlay
@@ -132,7 +130,7 @@ st_crs(fruit)$proj4string #NA
 # So let's reproject the fruit and davis.tracts into the same projection
 
 # Reprojection
-## First, establish the CRS for the fruit dataset based on how it was created intially
+## First, establish the CRS for the fruit dataset based on how it was created initially
 ## Since fruit is point data, the projected coordinate system is already set because latitude and longitude are the X-Y coordinates but we need to tell R this
 fruit.sf <- fruit %>%
   st_as_sf(coords = c("lng", "lat"), 
@@ -160,6 +158,7 @@ Finally, we are at the point where we can map the data! Let's first see what map
 ```{r tmap}
 # Map the point data over the census tract data
 ## tmap 
+## tmap_mode("view")
 tm_shape(davis.tracts.utm) +
   tm_polygons(col = "medhouseE", style = "quantile", palette = "Blues",
               title = "Median Housing Value ($)") +
