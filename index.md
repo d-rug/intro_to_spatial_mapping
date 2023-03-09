@@ -29,4 +29,4 @@ output:
 
 # Overview {-}
 
-In this workshop, we will cover how to bring in different sources of spatial data, as well as how to do spatial data wrangling so you can make a map. We will but using R packages: tidycensus, tmap, and leaflet. 
+In this workshop, we will cover how to bring in different sources of spatial data, as well as how to do spatial data wrangling so you can make a map. We will but using R packages: tidycensus, sf, tmap, and leaflet. 
