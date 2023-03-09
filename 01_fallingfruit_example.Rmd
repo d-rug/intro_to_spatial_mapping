@@ -20,9 +20,13 @@ Although, this workshop mostly covers vector data, it will also touch on another
 # Spatial Data Workflow {-}
 
 Here is a sample spatial data workflow: 
+
 1. Bring in spatial data of interest into R
+
 2. Wrangle data into desired format (e.g., intersect/within/clip, merge multiple spatial dataframes, areal interpolation, etc.)
+
 3. Set Coordinate Reference System (and potentially reproject or specify measurement units)
+
 4. Map data
 
 # Mapping trees in Davis Example  {-}
@@ -192,6 +196,7 @@ leaflet() %>%
                                                   bringToFront = TRUE))
 ```
 
+## Fruit Tree Richness 
 
 What if we wanted to know which areas in Davis have many different species of fruit trees in one place? This is the kind of question that is easier to answer using raster type data. We want to ask, per unit area, how many different types of trees are there. This is easy to represent on a grid. 
 

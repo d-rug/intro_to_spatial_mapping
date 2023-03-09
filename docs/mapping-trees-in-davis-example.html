@@ -147,6 +147,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="0.2" data-path="mapping-trees-in-davis-example.html"><a href="mapping-trees-in-davis-example.html#data-wrangling"><i class="fa fa-check"></i><b>0.2</b> Data wrangling</a></li>
 <li class="chapter" data-level="0.3" data-path="mapping-trees-in-davis-example.html"><a href="mapping-trees-in-davis-example.html#coordinate-reference-system"><i class="fa fa-check"></i><b>0.3</b> Coordinate Reference System</a></li>
 <li class="chapter" data-level="0.4" data-path="mapping-trees-in-davis-example.html"><a href="mapping-trees-in-davis-example.html#mapping-the-data"><i class="fa fa-check"></i><b>0.4</b> Mapping the data</a></li>
+<li class="chapter" data-level="0.5" data-path="mapping-trees-in-davis-example.html"><a href="mapping-trees-in-davis-example.html#fruit-tree-richness"><i class="fa fa-check"></i><b>0.5</b> Fruit Tree Richness</a></li>
 </ul></li>
 <li class="divider"></li>
 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
@@ -299,6 +300,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-14"><a href="mapping-trees-in-davis-example.html#cb6-14" aria-hidden="true" tabindex="-1"></a>              <span class="at">highlightOptions =</span> <span class="fu">highlightOptions</span>(<span class="at">color =</span> <span class="st">&quot;white&quot;</span>,</span>
 <span id="cb6-15"><a href="mapping-trees-in-davis-example.html#cb6-15" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">weight =</span> <span class="dv">2</span>,</span>
 <span id="cb6-16"><a href="mapping-trees-in-davis-example.html#cb6-16" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">bringToFront =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+</div>
+<div id="fruit-tree-richness" class="section level2 hasAnchor" number="0.5">
+<h2><span class="header-section-number">0.5</span> Fruit Tree Richness<a href="mapping-trees-in-davis-example.html#fruit-tree-richness" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>What if we wanted to know which areas in Davis have many different species of fruit trees in one place? This is the kind of question that is easier to answer using raster type data. We want to ask, per unit area, how many different types of trees are there. This is easy to represent on a grid.</p>
 <p>The following code is adapted from this <a href="https://luisdva.github.io/rstats/richness/">blogpost</a> by Luis D. Verde Arregoitia</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="mapping-trees-in-davis-example.html#cb7-1" aria-hidden="true" tabindex="-1"></a>Grid <span class="ot">&lt;-</span> davis <span class="sc">%&gt;%</span> <span class="co">#take our davis outline and draw a rectangle around it</span></span>
