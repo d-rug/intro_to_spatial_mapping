@@ -41,11 +41,12 @@ library(sf) #spatial package
 library(tmap) #mapping package
 library(bookdown)
 library(leaflet)#mapping package
+library(ggnewscale)
 ```
 
 Bring in all datasets of interest. In our case, we are going to use three sources of data: 1) City of Davis boundary, 2) census tract data for population and median housing value, and 3) fallenfruit.org fruit tree locations.
 
-```{r census_tracts}
+```{r davis_boundary_and_census_tracts}
 # You will need to sign up for a Census API Key if you are interested in pulling in US Census data 
 ## Request an API key here: https://api.census.gov/data/key_signup.html
 #census_api_key("3f1a61d7b9d2f870de53940d461dda896938261b", install = TRUE) #now stored in my R environment
@@ -77,7 +78,10 @@ ca.tracts <- get_acs(
       geometry = TRUE,
       cb = FALSE
       )
+```
 
+
+```{r fruit_data}
 # Now bring in fallingfruit.org
 ## I went onto the website and directly downloaded the csv file
 fruit <- read.csv("data/data.csv")
@@ -100,6 +104,8 @@ For this example, I am only interested in the distribuition of fruit trees withi
 ## Now I am only interested in Davis census tracts, so I will use the city of davis boundary to clip the tracts
 ## This function comes from the rmapshaper package
 davis.tracts <- ms_clip(target = ca.tracts, clip = davis, remove_slivers = TRUE) 
+
+str(davis.tracts)
 ```
 ## Coordinate Reference System
 
@@ -111,20 +117,15 @@ Now that we have all of our data, we need to make sure that each dataset has the
 Both GCS and PCS need to be specified when working with spatial data! In order to do this, you will first need to find out what CRS your spatial dataset was created in initially.
 
 ```{r crs}
-# Check CRS of all three datasets
-class(davis)
-st_crs(davis) #NAD83
-st_crs(davis)$proj4string #"+proj=longlat +datum=NAD83 +no_defs" 
-st_crs(davis)$units #NULL
-
-st_crs(davis.tracts) #NAD83
-st_crs(davis.tracts)$proj4string #"+proj=longlat +datum=NAD83 +no_defs" 
+# Check CRS dataframes you want to overlay
+st_crs(davis.tracts) #NAD 83
+st_crs(davis.tracts)$proj4string #"+proj=longlat +datum=NAD83 +no_defs"
 st_crs(davis.tracts)$units #NULL
 
 st_crs(fruit) #NA
 st_crs(fruit)$proj4string #NA
 
-# So we can see that both the davis and ca.tracts dataframes are in NAD 83, so let's reproject the fruit dataframe to also be in this projection
+# So let's reproject the fruit and davis.tracts into the same projection
 
 # Reprojection
 ## First, establish the CRS for the fruit dataset based on how it was created intially
@@ -140,18 +141,12 @@ st_crs(fruit.sf)# +proj=longlat +datum=WGS84 +ellps=WGS84
 fruit.utm <- fruit.sf %>%
   st_transform(crs = "+proj=utm +zone=10 +datum=NAD83 +ellps=GRS80")
 
-## Reproject davis and ca.tracts to also be in UTM
-davis.utm <- davis %>%
-  st_transform(crs = "+proj=utm +zone=10 +datum=NAD83 +ellps=GRS80")
-
+## Reproject davis.tracts to also be in UTM
 davis.tracts.utm <- davis.tracts %>%
   st_transform(crs = "+proj=utm +zone=10 +datum=NAD83 +ellps=GRS80")
 
 # Great, nows lets check to see if all dataframes are on the same CRS
-st_crs(fruit.utm) == st_crs(davis.utm) #TRUE
-
-st_crs(davis.utm) == st_crs(davis.tracts.utm) #TRUE
-
+st_crs(fruit.utm) == st_crs(davis.tracts.utm) #TRUE
 
 ```
 
