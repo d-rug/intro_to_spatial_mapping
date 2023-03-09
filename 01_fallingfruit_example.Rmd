@@ -196,3 +196,41 @@ leaflet() %>%
                                                   weight = 2,
                                                   bringToFront = TRUE))
 ```
+
+
+What if we wanted to know which areas in Davis have many different species of fruit trees in one place? This is the kind of question that is easier to answer using raster type data. We want to ask, per unit area, how many different types of trees are there. This is easy to represent on a grid. 
+
+The following code is adapted from this [blogpost](https://luisdva.github.io/rstats/richness/) by Luis D. Verde Arregoitia
+
+```{r richness}
+
+Grid <- davis %>% #take our davis outline and draw a rectangle around it
+  st_make_grid(n = 25) %>% # let each side of the rectangle have 25 cells
+  st_cast("MULTIPOLYGON") %>% #make the grid
+  st_sf() %>%
+  mutate(cellid = row_number())
+
+fruit.types <- fruit.utm %>% group_by(types) %>% # Here group fruit.utm by tree type, note that group by preserves the geometry, turning point classes into multi-point
+  summarise()
+
+Grid <- Grid %>% #make sure our grid is matching the CRS of our other layers
+   st_as_sf(coords = c("lng", "lat"), 
+           crs = "+proj=longlat +datum=WGS84 +ellps=WGS84") %>% 
+  st_transform(crs = "+proj=utm +zone=10 +datum=NAD83 +ellps=GRS80")
+
+richness_grid <- Grid %>%
+  st_join(fruit.types) %>% #join the fruit.types layer to the grid
+  mutate(overlap = ifelse(!is.na(types), 1, 0)) %>% #if type is not NA write 1
+  group_by(cellid) %>% #group by the cell ID's of the grid
+  summarize(num_types = sum(overlap)) #sum the number of types for each grid cell
+
+ggplot(davis.tracts.utm) + #can plot these using GG plot if we are not worried about north arrow or scale bar (prob can do in tmaps but I don't know that package)
+  geom_sf(aes(fill = medhouseE)) + #lets add our housing values layer
+  scale_fill_viridis_c() + 
+  ggnewscale::new_scale_fill() +
+  geom_sf(data = richness_grid, aes(fill = num_types), color = NA) + #add our grid
+  scale_fill_viridis_c(alpha = 1, option = "B", na.value = "#00000000", limits = c(1,7), name = "Num tree types per cell") #I used the limits and na.value fields to make cells where there are no trees clear, so that we can see the background map. 
+
+```
+
+
