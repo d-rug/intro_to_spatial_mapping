@@ -38,12 +38,14 @@ I am curious about the spatial distribution of fruit trees in Davis, and how thi
 knitr::opts_chunk$set(message = FALSE, results = "hide", error = FALSE, warning = FALSE)
 
 library(tidyverse)
-library(sf) #spatial package
+library(rmapshaper) # spatial data wrangling
 library(tigris) #brings in places data
 library(tidycensus) #brings in census data
-library(rmapshaper) # spatial data wrangling
+library(sf) #spatial package
 library(tmap) #mapping package
+library(bookdown)
 library(leaflet)#mapping package
+library(ggnewscale)
 ```
 
 Bring in all datasets of interest. In our case, we are going to use three sources of data: 1) City of Davis boundary, 2) census tract data for population and median housing value, and 3) fallenfruit.org fruit tree locations.
